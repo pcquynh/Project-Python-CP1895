@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{%  block body %}
+    <div class="container mt-3">
+
+
+<div class="row mb-3">
+     {% for recipe in recipes %}
+         <div class="col-4">
+         <div class="card">
+          <img src="static/images/{{recipe['image']}}" class="card-img-top">
+             <div class="card-header text-center">
+                <div class="badge bg-success">Recipe: {{ recipe['name'] }}</div>
+                 <div>
+                     <i class="fa-solid fa-clock"></i><span class="p-1">{{ recipe['cook_time'] }}</span>
+                     <i class="fa-solid fa-people-group"></i><span class="p-1">{{ recipe['servings'] }}</span>
+                 </div>
+            </div>
+          <div class="card-body">
+            <p class="card-text"><span class="text-decoration-underline fw-bold p-1">Instructions:</span> {{ recipe['instructions'] }}</p>
+              <p class="card-text"><span class="text-decoration-underline fw-bold p-1">Ingredients:</span>{{ recipe['ingredients'] }}</p>
+          </div>
+          <div class="card-footer text-center">
+                <a href="/edit/{{recipe['id']}}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="/delete/{{recipe['id']}}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+            </div>
+         </div>
+         {% if loop.index % 3 == 0 %}
+         </div>
+             <div class="row mb-3">
+         {% endif %}
+    {%endfor%}
+</div>
+</div>
+{% endblock %}
