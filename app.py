@@ -1,8 +1,18 @@
+import os
+
 from flask import Flask
+from werkzeug.utils import secure_filename
+
 from data import *
-from flask import render_template
+from flask import render_template, request, redirect, flash, url_for
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'static/images/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/')
@@ -19,7 +29,38 @@ def delete_recipe(id):
 
 @app.route('/save', methods=['POST'])
 def save_recipe():
-    pass
+    recipe = {}
+    if request.method == 'POST':
+        recipe['id'] = generate_id()
+        recipe['name'] = request.form['name']
+        recipe['cook_time'] = request.form['cook_time']
+        recipe['servings'] = request.form['servings']
+        recipe['instructions'] = request.form['instructions']
+        recipe['ingredients'] = request.form['ingredients']
+
+        # UPLOAD IMAGE
+
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(url_for('create_recipe'))
+        file = request.files['file']
+        if file.filename == '':
+            flash('No image selected for uploading')
+            return redirect(url_for('create_recipe'))
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print('upload_image filename: ' + filename)
+            recipe['image'] = filename
+        else:
+            flash('Allowed image types are - png, jpg, jpeg, gif')
+            return redirect(url_for('create_recipe'))
+
+        save_recipes_to_file('static/recipies.csv', recipe)
+
+        flash('The recipe was saved successfully')
+        return redirect(url_for('index'))
+
 
 
 @app.route('/create', methods=['POST', 'GET'])
