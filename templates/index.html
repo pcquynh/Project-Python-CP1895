@@ -2,6 +2,18 @@
 {%  block body %}
     <div class="container mt-3">
 
+    <div>
+     {% with messages = get_flashed_messages()  %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+</div>
+
 
 <div class="row mb-3">
      {% for recipe in recipes %}
