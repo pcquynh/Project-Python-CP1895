@@ -62,16 +62,18 @@ def save_recipe():
         return redirect(url_for('index'))
 
 
-
 @app.route('/create', methods=['POST', 'GET'])
 def create_recipe():
-    title = "Add recipe"
+    title = "Add Recipe"
     return render_template("create_recipe_form.html", title=title)
 
 
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 def edit_recipe(id):
-    pass
+    title = "Edit Recipe"
+    recipes = read_recipes_from_file('static/recipes.csv')
+    recipe = recipes[find_recipe_index_by_id(recipes, id)]
+    return render_template("edit_recipe_form.html", recipe=recipe, title=title)
 
 
 @app.route('/update/<id>', methods=['POST', 'GET'])

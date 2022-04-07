@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{%  block body %}
+<div class="container text-center">
+    <h1>Update recipe</h1>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                 </ul>
+              </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <form action="/update/{{recipe['id']}}"
+          method="post"
+          enctype="multipart/form-data"
+    >
+        <input type="hidden" value="{{recipe['id']}}" name="id">
+
+        <div class="m-3">
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-4">Recipe Name:</label>
+                <div class="col-8">
+                    <input class="form-control" type="text" value="{{recipe['name']}}" name="name" required>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-4">Cooking time:</label>
+                <div class="col-8">
+                    <input class="form-control" type="text" name="cook_time" value="{{recipe['cook_time']}}" required>
+                </div>
+            </div>
+              <div class="form-group row mb-3">
+                <label class="col-form-label col-4">Serving:</label>
+                <div class="col-8">
+                    <input class="form-control" type="text" name="servings" value="{{recipe['servings']}}" required>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-4">Instructions:</label>
+                <div class="col-8">
+                    <textarea class="form-control" type="text" name="instructions">{{recipe['instructions']}}</textarea>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-4">Ingredients:</label>
+                <div class="col-8">
+                    <textarea class="form-control" type="text" name="ingredients">{{recipe['ingredients']}}</textarea>
+                </div>
+            </div>
+
+            {% if recipe['image'] %}
+                <div class="row justify-content-end mb-3">
+                <div class="col-8">
+                    <img src="../static/images/{{recipe['image']}}" class="img-thumbnail">
+                </div>
+                </div>
+            {% endif %}
+
+            <div class="form-group row mb-3">
+              <label for="formFileLg" class="col-form-label col-4">Recipe Image</label>
+                <div class="col-8">
+              <input class="form-control form-control-lg" id="formFileLg" name="file" type="file">
+                </div>
+            </div>
+
+            <div class="row justify-content-end">
+                <div class="col-8">
+                    <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                    <a class="btn btn-secondary btn-lg" href="/">Cancel</a>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}
