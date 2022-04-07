@@ -13,10 +13,10 @@ def read_recipes_from_file(file_name):
 
 def write_recipes_to_file(file_name, recipes):
     with open(file_name, mode='w') as file:
-        fieldnames = ['id', 'name', 'cook-time', 'servings', 'instructions', 'ingredients', 'image']
+        fieldnames = ['id', 'name', 'cook_time', 'servings', 'instructions', 'ingredients', 'image']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerow(recipes)
+        writer.writerows(recipes)
 
 
 def save_recipes_to_file(file_name, recipe):
