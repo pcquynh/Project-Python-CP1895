@@ -4,7 +4,8 @@ from flask import Flask
 from werkzeug.utils import secure_filename
 
 from data import *
-from flask import render_template, request, redirect, flash, url_for,session
+from user import *
+from flask import render_template, request, redirect, flash, url_for, session, g
 
 
 UPLOAD_FOLDER = 'static/images/'
@@ -18,6 +19,38 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Create a list of users
+users = [User(id=1, username='quynhpc', password='password'),
+         User(id=2, username='admin', password='123456')]
+
+@app.before_request
+def before_request():
+    g.user = None
+
+    if 'user_id' in session:
+        user = [x for x in users if x.id == session['user_id']][0]
+        g.user = user
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        session.permanent = True
+        username = request.form['username']
+        password = request.form['password']
+
+        user = [x for x in users if x.username == username][0]
+
+        if user and user.password == password:
+            session['user_id'] = user.id
+            return redirect(url_for('index'))
+        else:
+            flash('Wrong username or password. Please try again!')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
 
 
 @app.route('/')
