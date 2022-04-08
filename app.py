@@ -4,13 +4,14 @@ from flask import Flask
 from werkzeug.utils import secure_filename
 
 from data import *
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for,session
 
 
 UPLOAD_FOLDER = 'static/images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
+app.secret_key = "somerandomstring"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
