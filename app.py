@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 from flask import Flask
 from werkzeug.utils import secure_filename
@@ -7,7 +8,6 @@ from data import *
 from user import *
 from flask import render_template, request, redirect, flash, url_for, session, g
 
-
 UPLOAD_FOLDER = 'static/images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.secret_key = "somerandomstring"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 
 def allowed_file(filename):
@@ -24,6 +25,7 @@ def allowed_file(filename):
 # Create a list of users
 users = [User(id=1, username='quynhpc', password='password'),
          User(id=2, username='admin', password='123456')]
+
 
 @app.before_request
 def before_request():
@@ -55,6 +57,8 @@ def login():
 
 @app.route('/')
 def index():
+    if not g.user:
+        return redirect(url_for('login'))
     recipes = read_recipes_from_file('static/recipes.csv')
     title = "Home Page"
     return render_template("index.html", recipes=recipes, title=title)
@@ -62,6 +66,8 @@ def index():
 
 @app.route('/delete/<id>', methods=['POST', 'GET'])
 def delete_recipe(id):
+    if not g.user:
+        return redirect(url_for('login'))
     delete_recipe_from_file('static/recipes.csv', id)
     flash('The recipe was removed successfully!')
     return redirect(url_for('index'))
@@ -69,14 +75,21 @@ def delete_recipe(id):
 
 @app.route('/save', methods=['POST'])
 def save_recipe():
+    if not g.user:
+        return redirect(url_for('login'))
     recipe = {}
     if request.method == 'POST':
         recipe['id'] = generate_id()
-        recipe['name'] = request.form['name']
-        recipe['cook_time'] = request.form['cook_time']
-        recipe['servings'] = request.form['servings']
-        recipe['instructions'] = request.form['instructions']
-        recipe['ingredients'] = request.form['ingredients']
+        errorMessage = form_validation(request.form['name'],request.form['cook_time'],request.form['servings'],request.form['instructions'],request.form['ingredients'])
+        if errorMessage:
+            flash(errorMessage)
+            return redirect(url_for('create_recipe'))
+        else:
+            recipe['name'] = request.form['name']
+            recipe['cook_time'] = request.form['cook_time']
+            recipe['servings'] = request.form['servings']
+            recipe['instructions'] = request.form['instructions']
+            recipe['ingredients'] = request.form['ingredients']
 
         # UPLOAD IMAGE
 
@@ -96,7 +109,7 @@ def save_recipe():
             flash('Allowed image types are - png, jpg, jpeg, gif')
             return redirect(url_for('create_recipe'))
 
-        save_recipes_to_file('static/recipies.csv', recipe)
+        save_recipes_to_file('static/recipes.csv', recipe)
 
         flash('The recipe was saved successfully')
         return redirect(url_for('index'))
@@ -104,12 +117,16 @@ def save_recipe():
 
 @app.route('/create', methods=['POST', 'GET'])
 def create_recipe():
+    if not g.user:
+        return redirect(url_for('login'))
     title = "Add Recipe"
     return render_template("create_recipe_form.html", title=title)
 
 
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 def edit_recipe(id):
+    if not g.user:
+        return redirect(url_for('login'))
     title = "Edit Recipe"
     recipes = read_recipes_from_file('static/recipes.csv')
     recipe = recipes[find_recipe_index_by_id(recipes, id)]
@@ -118,6 +135,8 @@ def edit_recipe(id):
 
 @app.route('/update/<id>', methods=['POST', 'GET'])
 def update_recipe(id):
+    if not g.user:
+        return redirect(url_for('login'))
     recipe = find_recipe_by_id('static/recipes.csv', id)
     if request.method == 'POST':
         recipe['id'] = request.form['id']
@@ -147,6 +166,11 @@ def update_recipe(id):
         else:
             flash('Allowed image types are - png, jpg, jpeg, gif')
             return redirect(url_for('edit_recipe', id=request.form['id']))
+
+
+def form_validation(name, cook_time, servings, instructions, ingredients):
+    if name.strip() == "" or cook_time.strip() == "" or servings.strip() == "" or instructions.strip() == "" or ingredients.strip() == "":
+        return "All * fields are required."
 
 
 if __name__ == '__main__':
