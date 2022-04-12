@@ -28,7 +28,7 @@ def save_recipes_to_file(file_name, recipe):
 
 def update_recipe_from_file(file_name, recipe):
     recipes = read_recipes_from_file(file_name)
-    index = find_recipe_by_id(recipes, recipe['id'])
+    index = find_recipe_index_by_id(recipes, recipe['id'])
     recipes[index] = recipe
     write_recipes_to_file(file_name, recipes)
 
