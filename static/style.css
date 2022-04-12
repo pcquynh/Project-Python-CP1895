@@ -40,3 +40,12 @@ form {
     min-height: 800px;
 }
 
+/*BUTTON*/
+.btn-sm {
+    width: 100px;
+    margin-left: 20px;
+}
+.btn-lg {
+    width: 150px;
+    margin-left: 20px;
+}
