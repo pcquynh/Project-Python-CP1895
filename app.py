@@ -55,6 +55,12 @@ def login():
     return render_template('login.html')
 
 
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    session.pop("user_id", None)
+    return redirect(url_for("login"))
+
+
 @app.route('/')
 def index():
     if not g.user:
@@ -135,8 +141,6 @@ def edit_recipe(id):
 
 @app.route('/update/<id>', methods=['POST', 'GET'])
 def update_recipe(id):
-    if not g.user:
-        return redirect(url_for('login'))
     recipe = find_recipe_by_id('static/recipes.csv', id)
     if request.method == 'POST':
         recipe['id'] = request.form['id']
