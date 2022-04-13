@@ -1,3 +1,9 @@
 id,name,cook_time,servings,instructions,ingredients,image
-20220329211439,Pork 1,1:45,3,1. Put salt on chicken 2. Put chicken in oven 3. Eat chicken,Chicken - 2 Pound,3.jpg
-20220408213946,Test,1,5,abc,abc,3.jpg
+20220412200554,Salad,0:45,3,"Wash all the ingredients. Cut the fruit and pumpkin. Mix together with olive oil.
+","Salad, tomato, pumpkin, available fruit, olive oil.",1.jpg
+20220412203101,Salmon,1:15,1,Pat salmon filet dry and season with spices on all sides. Cut vegetables and make the sauce. Put together.,"Salmon, tomato, cucumber, spinach.",2.jpg
+20220412203352,Lemon Salmon,0:30,3,Fume the salmon and mix with spices. Slice the lemon. Put all together with herb.,"Salmon, lemon, herb, salt, pepper, sugar.",3.jpg
+20220412203611,Spaghetti,1:30,5,Cook the spaghetti in salted water. Add vegetables. Toss the cooked spaghetti with a flavorful sauce.,"spaghetti , vegetables, homemade sauce",4.jpg
+20220412203850,Stawberry tarte,3:30,4,"Blend the sugar, cornstarch, and salt; stir into apple juice. Cook over a medium heat, stirring constantly until smooth and thick. Allow to cool for 10 minutes.Spread a small quantity of the glaze over the bottoms of the shells. Arrange washed and hulled fresh berries over the glaze, slicing if necessary to fit into the tarts. ","Prepared tart shells, sugar, strawberry, apple juice, cornstarch",5.jpg
+20220412205310,Chocolate cake,2:45,7,"Mix flour, sugar, chocolate, baking powder and water together. Put in the oven for 1:15 minutes. Decorate with fresh cream.","Flour, sugar, baking powder, fresh cream.",6.jpg
+20220412210335,Chicken Pizza,2:15,6,"Flatten dough ball, and stretch out into a round. Put the toppings. Put the pizza to oven for 55 minutes.","Dough, olive oil, tomato sauce, mushroom, chicken, onion.",7.jpg
