@@ -18,12 +18,19 @@
 form {
     max-width: 800px;
     margin: 0 auto;
-    min-height: 83vh;
 }
 
 .navbar-fixed-bottom {
-    height: 7vh;
+    position: fixed;
+    height: 60px;
+    bottom: 0;
+    width: 100%;
 }
+
+.container{
+    margin-bottom: 5rem;
+}
+
 
 /*IMAGE*/
 .img-thumbnail {
