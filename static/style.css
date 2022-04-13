@@ -39,13 +39,6 @@ form {
     object-fit: cover;
 }
 
-/*FORM*/
-
-form {
-    max-width: 800px;
-    margin: 0 auto;
-    min-height: 800px;
-}
 
 /*BUTTON*/
 .btn-sm {

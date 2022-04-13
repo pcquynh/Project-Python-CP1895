@@ -14,67 +14,72 @@
             referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="/static/style.css">
- {% if title %}
-    <title>{{ title }}</title>
- {% endif %}
+    {% if title %}
+        <title>{{ title }}</title>
+    {% endif %}
 </head>
 <body>
 {#navigation bar#}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Daily Recipe</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('create_recipe') }}">Create a recipe</a>
-        </li>
-      </ul>
-       <ul class="navbar-nav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Daily Recipe</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" >
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('create_recipe') }}">Create a recipe</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link">
                         <b> Hello, <span class="text-success">{{ g.user.username }}</span> </b>
                     </a>
                 </li>
                 <li class="nav-item">
-                        <a class="btn btn-outline-secondary" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="btn btn-outline-secondary" href="{{ url_for('logout') }}">Logout</a>
                 </li>
             </ul>
 
 
+        </div>
     </div>
-  </div>
 </nav>
 
-{%  block body %}
+{% block body %}
 {% endblock %}
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
 </body>
 {#footer#}
 <div class="navbar navbar-dark bg-dark navbar-fixed-bottom">
-      <div class="container justify-content-center">
+    <div class="container justify-content-center">
         <span class="navbar-text fw-bold">© 2022 Daily Recipes, All rights reserved</span>
-      </div>
+    </div>
 </div>
 </html>
 
 <script type="text/javascript">
-    $(function() {
-    window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-    });
-}, 4000);
-})
+    $(function () {
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 4000);
+    })
 </script>
 
 
